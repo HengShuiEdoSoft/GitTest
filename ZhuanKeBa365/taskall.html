@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>任务中心</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<!--<script src="js/fix.js" type="text/javascript"></script>-->
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script type="text/javascript" src="js/zkb.js"></script>
+		<style type="text/css">
+			.payimg1,.payimg2 {
+				width: 64px;
+				height: 64px;
+				border: #C8C8C8 1px solid
+			}
+		</style>
+		<script>
+			mui.plusReady(function() {
+				$(document).ready(function() {
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					var self = plus.webview.currentWebview();
+					var oid =  self.oid;
+					console.log(oid);
+					$("#allids").html(oid);
+					$("#taskID").val(oid);
+				});
+				$('#btnsure').on('tap', function() {
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					plus.nativeUI.showWaiting('提交中...');
+					var orderno = $("#orderno").val();
+					var hdjietu = $("#hdjietu1").val();
+					var hdjietu123 = $("#hdjietu2").val();
+					var taskID = $("#taskID").val();
+					if(orderno == "") {
+						mui.alert("淘宝账号不能为空");
+						plus.nativeUI.closeWaiting();
+						return;
+					}
+					if(hdjietu == "") {
+						mui.alert("请上传地址库图片");
+						plus.nativeUI.closeWaiting();
+						return;
+					}
+					if(hdjietu123 == "") {
+						mui.alert("请上传验号图片");
+						plus.nativeUI.closeWaiting();
+						return;
+					}
+					mui.post(AliceHost + "/home/posttaskAll", {
+						orderno: orderno,
+						hdjietu: hdjietu,
+						hdjietu123: hdjietu123,
+						taskID: taskID,
+						userId: useName,
+						apptoken: apptoken
+					}, function(data) {
+						plus.nativeUI.closeWaiting();
+						if(data.code == "0") {
+							mui.toast(data.msg);
+						} else {
+							mui.toast(data.msg);
+							// 获取目标口窗口对象
+							var target = plus.webview.getWebviewById('index_task1.html');
+							// 执行相应的事件
+							mui.fire(target, 'initpage1', {});
+							// 执行关闭
+							mui.back();
+						}
+					}, "json");
+				});
+				$("#gjc").on("tap", function() {
+					copykeys();
+				});
+				$("#copybtn").on("tap", function() {
+					copykeys();
+				});
+
+				function copykeys() {
+					var copycontent = $('#gjc').data('keyword');
+					if(plus.os.name == "Android") {
+						var Context = plus.android.importClass("android.content.Context");
+						var main = plus.android.runtimeMainActivity();
+						var clip = main.getSystemService(Context.CLIPBOARD_SERVICE);
+						plus.android.invoke(clip, "setText", copycontent);
+						var value = plus.android.invoke(clip, "getText");
+					}
+					if(plus.os.name == "iOS") {
+						var UIPasteboard = plus.ios.importClass("UIPasteboard");
+						var generalPasteboard = UIPasteboard.generalPasteboard();
+						generalPasteboard.setValueforPasteboardType(copycontent, "public.utf8-plain-text");
+						var value = generalPasteboard.valueForPasteboardType("public.utf8-plain-text");
+					}
+					mui.toast('已复制关键词');
+				}
+				$(".payimg1").on("tap", function() {
+					imgUpload('1');
+				});
+				$(".payimg2").on("tap", function() {
+					imgUpload('2');
+				});
+
+				function imgUpload(t) {
+					plus.nativeUI.actionSheet({
+						cancel: "取消",
+						buttons: [{
+							title: "拍照"
+						}, {
+							title: "从相册中选择"
+						}]
+					}, function(e) { //1 是拍照  2 从相册中选择
+						console.log(e.index);
+						switch(e.index) {
+							case 1:
+								clickCamera(t);
+								break;
+							case 2:
+								clickGallery(t);
+								break;
+						}
+					});
+				}
+
+				function clickGallery(t) {
+					plus.gallery.pick(function(e) {
+						$('.payimg' + t).attr('src', e);
+						getbeseimg(e, t);
+					}, function(e) {
+						if(e.code == 8) {
+							mui.confirm('应用程序没有访问您相册的权限,您可以在系统设置“隐私设置”中启用应用程序对相册的访问', '温馨提示', ['确定']);
+						}
+					}, {
+						filter: 'image',
+						multiple: false,
+						system: false
+					});
+				}
+
+				function clickCamera(t) {
+					var cmr = plus.camera.getCamera();
+					cmr.captureImage(function(path) {
+							plus.io.resolveLocalFileSystemURL(path, function(entry) {
+								var localurl = entry.toLocalURL();
+								$('.payimg' + t).attr('src', localurl);
+								getbeseimg(localurl, t);
+							});
+						},
+						function(error) {
+							mui.toast("未选定照片");
+						}
+					);
+				}
+
+				function getbeseimg(url, t) {
+					var img = new Image(),
+						maxH = 160;
+					img.src = url;
+					img.onload = function() {
+						var w=this.width,h=this.height,scale=w/h;
+						w=500;
+						h=w/scale;
+						var cvs = document.createElement('canvas'),
+							ctx = cvs.getContext('2d');
+						cvs.width = w;
+						cvs.height = h;
+						ctx.clearRect(0, 0, cvs.width, cvs.height);
+						ctx.drawImage(img, 0, 0, w, h);
+						var dataUrl = cvs.toDataURL('image/jpeg', 0.6);
+						var result = {
+							base64: dataUrl,
+							clearBase64: dataUrl.substr(dataUrl.indexOf(',') + 1)
+						};
+						$("#hdjietu"+t).val(result.clearBase64);
+					};
+				}
+			});
+
+			function showimg() {
+				$("#proimg").fadeIn();
+			}
+
+			function hideimg() {
+				$("#proimg").fadeOut();
+			}
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">任务批量处理</h1>
+		</header>
+		<div class="mui-content">
+			<div class="weui-cells__title fcm">订单ID</div>
+			<div class="weui-cells weui-cells_form fs14">
+				<div class="weui-cell">
+					<div class="weui-cell__bd" id="allids"></div>
+				</div>
+			</div>
+			<div class="weui-cells__title fcm">任务提交</div>
+			<div class="weui-cells weui-cells_form fs14">
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">淘宝账号</label></div>
+					<div class="weui-cell__bd">
+						<input type="hidden" name="taskID" id="taskID" value="" />
+						<input class="weui-input" type="text" placeholder="请输入淘宝账号" id="orderno" name="orderno" value="" />
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">地址图片</label></div>
+					<div class="weui-cell__bd">
+						<div class="weui-uploader">
+							<div class="weui-uploader__bd">
+								<img src="images/upload.png" class="payimg1" />
+								<input type="hidden" id="hdjietu1" name="hdjietu1" value="" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">验号图片</label></div>
+					<div class="weui-cell__bd">
+						<div class="weui-uploader">
+							<div class="weui-uploader__bd">
+								<img src="images/upload.png" class="payimg2" />
+								<input type="hidden" id="hdjietu2" name="hdjietu2" value="" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="weui-btn-area" id="btnshow">
+				<a class="weui-btn edo-btn_sure" href="javascript:" id="btnsure">确定</a>
+			</div>
+		</div>
+	</body>
+
+</html>

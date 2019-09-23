@@ -1,0 +1,2 @@
+<import src="./calendar.vue.wxml" />
+    <template is="1bb14dae" data="{{ ...$root['0'], $root }}"/>

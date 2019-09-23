@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head><meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>登录</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/login.css" rel="stylesheet" />
+		<style type="text/css">
+			body {
+				background: #FFFFFF
+			}
+			
+			.topback {
+				width: 100%;
+				height: 25%;
+				position: fixed;
+				top: 0px;
+				background-color: #1B82D1;
+			}
+			
+			.topback img {
+				width: 15%;
+				position: fixed;
+				left: 42.5%;
+				top: 10%;
+			}
+			
+			.topimg img {
+				width: 100%;
+				position: fixed;
+				top: 25%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="topback">
+				<img src="images/logo2.png">
+			</div>
+			<div class="topimg"><img src="images/login01.jpg">
+			</div>
+			<div class="login_info " style="position:absolute;top:35%;width:100%;">
+				<form class="form-horizontal ">
+					<div class="form-group">
+						<div class="icon">
+							<img src="images/user.login@2x.png" style="width:1.5rem;margin:0.3rem;">
+						</div>
+						<input type="tel" name="username" class="form-item " style="padding-top:1.5rem;" placeholder="手机" maxlength="11">
+					</div>
+					<div class="form-group">
+						<div class="icon">
+							<img src="images/password@2x.png" style="width:1.5rem;margin:0.3rem;">
+						</div>
+						<input type="password" name="password" class="form-item" style="padding-top:1.5rem;" placeholder="密码">
+
+					</div>
+				</form>
+				<div class="text-center login_button" style="background-color: #63aeff;width:80%;margin:3.5rem auto;margin-bottom:10px;border-radius: 30px;text-align: center;">
+					<a class="login js-login" style="color:white;">登录</a>
+				</div>
+				<div class="register" style="width:100%;text-align: center;">
+					<a class="registergo" style="display: inline-block;margin:0;padding:0;">注册点这里!</a><i style="color:#bbb;margin:20px;">|</i>
+					<a class="Forget" style="display:inline-block;position: inherit;padding:0px;">忘记密码？</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+		<script type="text/javascript" src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="html5plus://ready"></script>
+		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var backButtonPress = 0;
+			mui.back = function(event) {
+				backButtonPress++;
+				if(backButtonPress > 1) {
+					plus.runtime.quit();
+				} else {
+					mui.toast('再按一次退出应用');
+				}
+				setTimeout(function() {
+					backButtonPress = 0;
+				}, 1000);
+				return false;
+			};
+			var wv = plus.webview.currentWebview();
+			wv.setStyle({
+				'popGesture': 'none'
+			});
+			$(".Forget").on("tap", function() {
+				mui.openWindow({
+					url: "ForgetPwd.html",
+					id: "ForgetPwd.html"
+				});
+			});
+			$(".registergo").on("tap", function() {
+				mui.openWindow({
+					url: "register.html",
+					id: "register.html"
+				});
+			});
+		</script>
+	</body>
+</html>

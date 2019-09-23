@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>任务中心</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script type="text/javascript" src="js/listuser.js"></script>
+		<style type="text/css">
+			.weui-media-box__title {
+				line-height: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mui-content">
+			<div class="weui_tab" id="tabnews">
+				<div class="h10p"></div>
+				<div class="page__bd_spacing">
+					<div class="weui_tab_nav">
+						<a href="index_task1.html" class="weui_navbar_item weui_nav_green">待操作</a>
+						<a href="index_task2.html" class="weui_navbar_item weui_nav_green">待审核</a>
+						<a href="index_task3.html" class="weui_navbar_item weui_nav_green">已完成</a>
+					</div>
+				</div>
+				<div class="weui_tab_bd">					
+					<div class="weui_tab_bd_item"></div>
+					<div class="weui_tab_bd_item"></div>
+					<div class="weui_tab_bd_item">
+						<div class="h10p"></div>
+						<div class="weui-search-bar" id="searchBar">
+							<form class="weui-search-bar__form">
+								<div class="weui-search-bar__box">
+									<i class="weui-icon-search"></i>
+									<input type="text" class="weui-search-bar__input" id="searchInput" placeholder="搜索ID" value="" style="margin-bottom: 0;">
+									<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+								</div>
+								<label class="weui-search-bar__label" id="searchText">
+                            		<i class="weui-icon-search"></i>
+                            		<span>搜索ID</span>
+                        		</label>
+							</form>
+							<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">确定</a>
+						</div>
+						<div class="weui-panel weui-panel_access">
+							<input type="hidden" name="hdkeys" id="hdkeys" />
+							<div class="weui-panel__bd" id="newscon">
+							</div>
+							<div id="loadorder">
+								<div class="spinner">
+									<div class="bounce1"></div>
+									<div class="bounce2"></div>
+									<div class="bounce3"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			mui.plusReady(function() {
+				$(function() {
+					$('#tabnews').tab({
+						defaultIndex: 2,
+						activeClass: "bg_green"
+					});
+					page = 1;
+					getList2();
+					scrollPage(getList2);
+					var $searchBar = $('#searchBar'),
+						$searchText = $('#searchText'),
+						$searchInput = $('#searchInput'),
+						$searchClear = $('#searchClear'),
+						$searchCancel = $('#searchCancel');
+					if($searchInput.val().length > 0) {
+						barFocus();
+					}
+
+					function hideSearchResult() {
+						$searchInput.val('');
+					}
+
+					function cancelSearch() {
+						$searchBar.removeClass('weui-search-bar_focusing');
+						$searchText.show();
+					}
+
+					function barFocus() {
+						$searchBar.addClass('weui-search-bar_focusing');
+						$searchInput.focus();
+					}
+					$searchText.on('click', function() {
+						barFocus();
+					});
+					$searchInput.on('blur', function() {
+						if(!this.value.length) cancelSearch();
+					}).on('input', function() {
+
+					});
+					$searchClear.on('click', function() {
+						hideSearchResult();
+						$searchInput.focus();
+					});
+					$searchCancel.on('click', function() {
+						if($searchInput.val().length > 0) {
+							$("#hdkeys").val($searchInput.val());
+							page=1;
+							$("#newscon").html("");
+							getList2();
+						}else{
+							$("#hdkeys").val('');
+							page=1;
+							$("#newscon").html("");
+							getList2();
+						}
+					});
+				});
+				window.addEventListener('initpage1', function() {
+					page=1;
+					$("#hdkeys").val('');
+					$("#newscon").html("");
+					getList2();
+				}, false);
+				$(document).on('tap', '.weui-btn', function() {
+					var oid = $(this).data('oid');
+					console.log(oid);
+					mui.openWindow({
+						url: 'taskshow.html?oid=' + oid,
+						id: 'taskshow.html'
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

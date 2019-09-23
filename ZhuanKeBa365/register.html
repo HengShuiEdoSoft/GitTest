@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head><meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>注册</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/reg.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+		<script type="text/javascript" src="js/register.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				
+			});
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">注册</h1>
+		</header>
+		<div class="mui-content">
+			<p class="introduce fixtop">
+			“赚客吧”<span>APP用户注册都是完全免费</span>的，请不要相信任何利用平台注册收取费用的骗子信息，任何疑问请咨询官方客服
+			</p>
+			<div class="login_info" id="login_info">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label>账号</label>
+						<input type="text" name="username" class="form-item" style="padding-top:1.5rem;" placeholder="请输入手机号码" maxlength="11">
+					</div>
+					<div class="form-group Verify_item">
+						<label>验证</label>
+						<input type="text" name="Verify" class="form-item" style="padding-top:1.5rem;" placeholder="请输入验证码">
+						<a class="Verify js-Verify">获取手机验证码</a>
+					</div>
+					<div class="form-group">
+						<label>密码</label>
+						<input type="password" name="password" class="form-item" style="padding-top:1.5rem;" placeholder="输入6-16位密码">
+					</div>
+					<div class="form-group">
+						<label>确认</label>
+						<input type="password" name="repassword" class="form-item" style="padding-top:1.5rem;" placeholder="请确认密码">
+					</div>
+					<div class="form-group">
+						<label>推广ID</label>
+						<input type="text" name="eid" class="form-item" style="padding-top:1.5rem;" placeholder="请输入推广ID（选填）">
+					</div>
+				</form>
+				<div class="weui-btn-area">
+					<a class="weui-btn edo-btn_sure btnaaa" href="javascript:" id="reg">注册</a>
+				</div>
+				<div class="agree">
+					<p>我已满16周岁并同意
+						<a>《赚客吧注册协议》</a>
+					</p>
+				</div>
+			</div>			
+		</div>
+	</body>
+</html>

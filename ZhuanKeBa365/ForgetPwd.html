@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>找回密码</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/reg.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">找回密码</h1>
+		</header>
+		<div class="mui-content">
+			<form class="form-horizontal fixtop">
+				<div class="form-group">
+					<input type="text" name="phone" class="form-item js-phone" placeholder="请输入手机号">
+				</div>
+				<div class="form-group Verify_item">
+					<input type="text" name="Verify" class="form-item js-code" style="padding-top:0.8rem;" placeholder="请输入验证码">
+					<a class="Verify js-Verify">获取手机验证码</a>
+				</div>
+				<div class="form-group Verify_item">
+					<input type="password" name="password" class="form-item js-password" placeholder="请输入新密码">
+				</div>
+			</form>
+			<div class="weui-btn-area">
+				<a class="weui-btn edo-btn_sure btnaaa" href="javascript:" id="reg">注册</a>
+			</div>
+		</div>
+		<script src="html5plus://ready"></script>
+		<script type="text/javascript">
+			var clGo = false;
+			$('.js-Verify').on('click', function(event) {
+				if(!$('.js-Verify').hasClass("Verify_tmp")) {
+					event.preventDefault();
+					var phone = $('.js-phone').val();
+					if(!(/^1[34578]\d{9}$/.test(phone))) {
+						mui.toast('请填写正确手机号');
+						return;
+					};
+					settime(60);
+					mui.ajax(AliceHost + '/Login/SendMsg',{
+						data: {
+							phone: phone
+						},
+						dataType: 'json',
+						type: 'post',
+						success: function(data) {
+							mui.toast('验证码已发送');
+						}
+					});
+				} else {
+					return;
+				}
+			});
+			$('.js-submit').on('click', function() {
+				var phone = $('.js-phone').val(),
+					code = $('.js-code').val(),
+					password = $('.js-password').val();
+				if(!(/^1[34578]\d{9}$/.test(phone))) {
+					mui.toast('请填写正确手机号');
+					return;
+				};
+				if(!code) {
+					mui.toast('请填验证码！');
+					return;
+				};
+				if(!password) {
+					mui.toast('请填写密码！');
+					return;
+				};
+				mui.ajax(AliceHost + '/Login/ForgetPwd',{
+					data: {
+						phone: phone,
+						validateCode: code,
+						pwd: password
+					},
+					dataType: 'json',
+					type: 'post',
+					success: function(data) {
+						if(data.code === "1") {
+							mui.back();
+						} else {
+							mui.toast(data.msg);
+						}
+					}
+				});
+			});
+
+			function settime(countdown) {
+				var cdtext = "";
+				if(countdown >= 1) {
+					countdown--;
+					cdtext = countdown + "s后重新获取验证码";
+					$('.js-Verify').html(cdtext);
+					$('.js-Verify').addClass("Verify_tmp");
+					//$('.js-Verify').css("color","#ddd");
+				} else if(countdown < 1) {
+					countdown = 60;
+					cdtext = "获取手机验证码";
+					$('.js-Verify').html(cdtext);
+					$('.js-Verify').removeClass("Verify_tmp");
+					//$('.js-Verify').css("color","#00abef");
+					return;
+				}
+				setTimeout(function() {
+					settime(countdown)
+				}, 1000)
+				//setTimeout(settime(countdown),1000);
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>任务中心</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script type="text/javascript" src="js/listuser.js"></script>
+		<style type="text/css">
+			.weui-media-box__title {
+				line-height: 30px;
+			}
+			
+			.weui-media-box__title {
+				font-size: 14px
+			}
+			
+			.chkpos {
+				position: absolute;
+				right: 10px;
+				top: 20px
+			}
+			
+			.weui-form-preview {
+				position: fixed;
+				height: 50px;
+				width: 100%;
+				left: 0;
+				bottom: 0px;
+				z-index: 50;
+				background: #FFF;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="weui_tab" id="tabnews">
+				<div class="h10p"></div>
+				<div class="page__bd_spacing">
+					<div class="weui_tab_nav">
+						<a href="index_task1.html" class="weui_navbar_item weui_nav_green">待操作</a>
+						<a href="index_task2.html" class="weui_navbar_item weui_nav_green">待审核</a>
+						<a href="index_task3.html" class="weui_navbar_item weui_nav_green">已完成</a>
+					</div>
+				</div>
+				<div class="weui_tab_bd">
+					<div class="weui_tab_bd_item">
+						<div class="h10p"></div>
+						<div class="weui-search-bar" id="searchBar">
+							<form class="weui-search-bar__form">
+								<div class="weui-search-bar__box">
+									<i class="weui-icon-search"></i>
+									<input type="text" class="weui-search-bar__input" id="searchInput" placeholder="搜索ID" value="" style="margin-bottom: 0;">
+									<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+								</div>
+								<label class="weui-search-bar__label" id="searchText">
+                            		<i class="weui-icon-search"></i>
+                            		<span>搜索ID</span>
+                        		</label>
+							</form>
+							<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">确定</a>
+						</div>
+						<div class="weui-panel weui-panel_access">
+							<input type="hidden" name="hdkeys" id="hdkeys" />
+							<div class="weui-panel__bd" id="newscon">
+								
+							</div>
+							<div id="loadorder">
+								<div class="spinner">
+									<div class="bounce1"></div>
+									<div class="bounce2"></div>
+									<div class="bounce3"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="weui_tab_bd_item"></div>
+					<div class="weui_tab_bd_item"></div>
+				</div>
+			</div>
+			<div style="height:50px;clear:both">
+				<div class="weui-form-preview">
+					<div class="weui-form-preview__ft">
+						<a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:void(0)" style="font-size:16px;color:#1AAD19" id="submitall">批量提交</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			mui.plusReady(function() {
+				mui.init({
+					gestureConfig: {
+						tap: true,
+						doubletap: false,
+						longtap: false,
+						hold: false,
+						flick: true,
+						swipe: true,
+						drag: true,
+						pinch: false
+					}
+				});
+				$(function() {
+					$('#tabnews').tab({
+						defaultIndex: 0,
+						activeClass: "bg_green"
+					});
+					page = 1;
+					getList();
+					scrollPage(getList);
+					var $searchBar = $('#searchBar'),
+						$searchText = $('#searchText'),
+						$searchInput = $('#searchInput'),
+						$searchClear = $('#searchClear'),
+						$searchCancel = $('#searchCancel');
+					if($searchInput.val().length > 0) {
+						barFocus();
+					}
+
+					function hideSearchResult() {
+						$searchInput.val('');
+					}
+
+					function cancelSearch() {
+						$searchBar.removeClass('weui-search-bar_focusing');
+						$searchText.show();
+					}
+
+					function barFocus() {
+						$searchBar.addClass('weui-search-bar_focusing');
+						$searchInput.focus();
+					}
+					$searchText.on('click', function() {
+						barFocus();
+					});
+					$searchInput.on('blur', function() {
+						if(!this.value.length) cancelSearch();
+					}).on('input', function() {
+
+					});
+					$searchClear.on('click', function() {
+						hideSearchResult();
+						$searchInput.focus();
+					});
+					$searchCancel.on('click', function() {
+						if($searchInput.val().length > 0) {
+							$("#hdkeys").val($searchInput.val());
+							page = 1;
+							$("#newscon").html("");
+							getList();
+						} else {
+							$("#hdkeys").val('');
+							page = 1;
+							$("#newscon").html("");
+							getList();
+						}
+					});
+					$('#submitall').click(function() {
+						if($("input[type='checkbox']:checked").length > 0) {
+							var dropIds = new Array();
+							var boxs = $("input[type='checkbox']:checked");
+							boxs.each(function() {
+								dropIds.push($(this).val());
+							});
+							mui.openWindow({
+								url: 'taskall.html',
+								id: 'taskall.html',
+								extras:{
+									oid:dropIds.join("|")
+								}
+							});
+						} else {
+							mui.toast("没有选中任何一项!");
+						}
+					});
+				});
+				window.addEventListener('initpage1', function() {
+					page = 1;
+					$("#hdkeys").val('');
+					$("#newscon").html("");
+					getList();
+				}, false);
+				$(document).on('tap', '.weui-btn', function() {
+					var oid = $(this).data('oid');
+					console.log(oid);
+					mui.openWindow({
+						url: 'taskshow.html?oid=' + oid,
+						id: 'taskshow.html'
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>

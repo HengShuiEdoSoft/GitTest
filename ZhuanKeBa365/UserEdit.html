@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>修改头像</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+		<style type="text/css">
+
+		</style>
+		<script>
+			mui.plusReady(function() {
+				$(document).ready(function() {
+					initpage();
+				});
+
+				function initpage() {
+					console.log("useredit");
+					var w = plus.nativeUI.showWaiting();
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					mui.ajax(AliceHost + '/Users/UserCenter',{
+						data: {
+							userId: useName,
+							apptoken: apptoken
+						},
+						type: 'post',
+						dataType: 'json',
+						timeout: 3000,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							if(data.code == "1") {
+								$("#username").val(data.data.NickName);
+								$("#yyzzimg").val(data.data.CongYe);
+							} else {
+								plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+							}
+						}
+					});
+				}
+				$('#btnsure').on('tap', function() {
+					var userId = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					plus.nativeUI.showWaiting('提交中...');
+					var username = $("#username").val();
+					var hfimg5 = $("#hfimg5").val();
+					var img = $("#yyzzimg").val();
+					if(username == "") {
+						mui.toast("昵称不能为空");
+						return;
+					}
+					mui.post(AliceHost + "/Users/EditNickName", {
+						userId: userId,
+						apptoken: apptoken,
+						UserName: username,
+						YingYe: img,
+						YingYeImg1: hfimg5
+					}, function(data) {
+						plus.nativeUI.closeWaiting();
+						if(data.code == "0") {
+							mui.toast(data.msg);
+						} else {
+							mui.toast(data.msg);
+							// 获取目标口窗口对象
+							var target = plus.webview.getWebviewById('usercenter.html');
+							// 执行相应的事件
+							mui.fire(target, 'initpage1', {});
+							// 执行关闭
+							mui.back();
+						}
+					}, "json");
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">修改头像</h1>
+		</header>
+		<div class="mui-content">
+			<div class="weui-cells weui-cells_form fs14">
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">昵称</label></div>
+					<div class="weui-cell__bd">
+						<input class="weui-input" type="text" placeholder="请输入昵称" id="username" name="username" value="" />
+					</div>
+			</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">头像</label></div>
+					<div class="weui-cell__bd">
+						<div class="weui-uploader">
+							<div class="weui-uploader__bd">
+								<ul class="weui-uploader__files" id="uploaderFiles">
+									<li class="weui-uploader__file userimg" id="img5"><input id="uploaderInputC" class="weui-uploader__input" type="file" accept="image/jpg,image/jpeg,image/png,image/gif" /></li>
+								</ul>
+								<input type="hidden" id="hfimg5" name="hfimg5" value="" /> 
+								<input type="hidden" id="yyzzimg" name="yyzzimg" value="" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="weui-btn-area">
+				<a class="weui-btn edo-btn_sure" href="javascript:" id="btnsure">确定</a>
+			</div>
+		</div>
+	</body>
+    <script src="js/localimg.js" type="text/javascript"></script>
+    <script src="js/fix.js" type="text/javascript"></script>
+    <script type="text/javascript">
+         $("#uploaderInputC").localResizeIMG({
+            width: 500,
+            quality: 0.6,
+            success: function (result) {
+                $("#img5").css("background-image", "url(" + result.base64 + ")");
+                $("#hfimg5").val(encodeURI(result.clearBase64));
+            }
+        });
+        </script>
+</html>

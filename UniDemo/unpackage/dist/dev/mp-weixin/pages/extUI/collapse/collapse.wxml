@@ -1,0 +1,2 @@
+<import src="./collapse.vue.wxml" />
+    <template is="58934ae4" data="{{ ...$root['0'], $root }}"/>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>提现明细</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+		<script>
+			mui.plusReady(function() {
+				$(document).ready(function() {
+					initpage();
+				});
+				function initpage() {
+					console.log("userlist");
+					var w = plus.nativeUI.showWaiting();
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					mui.ajax(AliceHost + '/Users/CashList',{
+						data: {
+							userId: useName,
+							apptoken: apptoken
+						},
+						type: 'post',
+						dataType: 'json',
+						timeout: 3000,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							console.log(data.code);
+							if(data.code == "1") {
+								$("#conbd").html(data.data);
+							} else {
+								plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+							}
+						}
+					});
+				}
+			});
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">提现明细</h1>
+		</header>
+		<div class="mui-content">
+			<div class="weui-panel weui-panel_access">
+        	   <div class="weui-panel__bd" id="conbd">
+        	   	
+        	   </div>
+        	</div>
+		</div>
+	</body>
+</html>

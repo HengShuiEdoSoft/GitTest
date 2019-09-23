@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>修改密码</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+		<style type="text/css">
+
+		</style>
+		<script>
+			mui.plusReady(function() {
+				$('#btnsub').on('tap', function() {
+					var userId = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					plus.nativeUI.showWaiting('提交中...');
+
+					var password = $("#password").val();
+					var newpwd = $("#newpwd").val();
+					var repassword = $("#repassword").val();
+					if(password == "") {
+						mui.toast("请填写旧密码！");
+						plus.nativeUI.closeWaiting();
+						return;
+					} else if(newpwd == "") {
+						mui.toast("请填写新密码！");
+						plus.nativeUI.closeWaiting();
+						return;
+					} else if(repassword == "") {
+						mui.toast("请确认新密码！");
+						plus.nativeUI.closeWaiting();
+						return;
+					} else if(newpwd != repassword) {
+						mui.toast("两次密码不一致，请重新填写！");
+						plus.nativeUI.closeWaiting();
+						return;
+					} else {
+						plus.nativeUI.closeWaiting();
+						mui.post(AliceHost + "/Users/UserPwd", {
+							userId: userId,
+							apptoken: apptoken,
+							password: password,
+							newpassword: newpwd,
+							repassword: repassword
+						}, function(data) {
+							plus.nativeUI.closeWaiting();
+							if(data.code == "0") {
+								mui.toast(data.msg);
+							} else {
+								plus.storage.setItem('usename', "");
+								plus.storage.setItem('mobile', "");
+								plus.storage.setItem('headimg', "");
+								plus.storage.setItem('apptoken', "");
+								mui.toast(data.msg);
+								// 获取目标口窗口对象
+								var target = plus.webview.getWebviewById('usercenter.html');
+								// 执行相应的事件
+								mui.fire(target, 'initpage1', {});
+								// 执行关闭
+								mui.back();
+							}
+						}, "json");
+					}
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">修改密码</h1>
+		</header>
+		<div class="mui-content">
+			<div class="weui-cells weui-cells_form">
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">原密码</label></div>
+					<div class="weui-cell__bd fs14">
+						<input class="weui-input" type="password" placeholder="请输入原密码" id="password" name="password" />
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">新密码</label></div>
+					<div class="weui-cell__bd fs14">
+						<input class="weui-input" type="password" placeholder="请输入新密码" id="newpwd" name="newpwd" />
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">确认密码</label></div>
+					<div class="weui-cell__bd fs14">
+						<input class="weui-input" type="password" placeholder="请输入确认密码" id="repassword" name="repassword" />
+					</div>
+				</div>
+			</div>
+			<div class="weui-btn-area">
+				<a class="weui-btn edo-btn_sure" href="javascript:" id="btnsub">确定</a>
+			</div>
+		</div>
+	</body>
+
+</html>

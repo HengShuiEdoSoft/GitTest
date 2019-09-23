@@ -1,0 +1,2 @@
+<import src="./add-phone-contact.vue.wxml" />
+    <template is="665e43df" data="{{ ...$root['0'], $root }}"/>

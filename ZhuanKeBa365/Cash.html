@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>余额提现</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+		<style type="text/css">
+
+		</style>
+		<script>
+			var i=0;
+			mui.plusReady(function() {
+				$(document).on('tap', '#chakan', function() {
+					mui.openWindow({
+						url: 'CashList.html',
+						id: 'CashList.html'
+					});
+				});	
+				$(document).ready(function() {
+					initpage();
+				});
+				function initpage() {
+					console.log("cash");
+					var w = plus.nativeUI.showWaiting();
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					mui.ajax(AliceHost + '/Users/UserCenter',{
+						data: {
+							userId: useName,
+							apptoken: apptoken
+						},
+						type: 'post',
+						dataType: 'json',
+						timeout: 3000,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							console.log(data.code);
+							if(data.code == "1") {
+								$("#money1").text(data.data.Money1);
+								$("#money3").text(data.data.Money3);
+							} else {
+								plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+							}
+						}
+					});
+				}
+				$('#btnsub').on('tap', function() {
+					if(i>0){return;}					
+					var userId = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					plus.nativeUI.showWaiting('提交中...');
+
+					var amount = $("#amount").val();
+					var password = $("#password").val();
+					if(amount == "") {
+						mui.toast("请输入提现金额");
+						plus.nativeUI.closeWaiting();
+						return;
+					}
+					if(password == "") {
+						mui.toast("请输入登录密码");
+						plus.nativeUI.closeWaiting();
+						return;
+					}
+					i=1;
+					mui.post(AliceHost + "/Users/Cash", {
+						userId: userId,
+						apptoken: apptoken,
+						amount: amount,
+						password: password
+					}, function(data) {
+						plus.nativeUI.closeWaiting();
+						if(data.code == "0") {
+							i=0;
+							mui.toast(data.msg);
+						} else {
+							mui.toast(data.msg);
+							// 获取目标口窗口对象
+							var target = plus.webview.getWebviewById('usercenter.html');
+							// 执行相应的事件
+							mui.fire(target, 'initpage1', {});
+							// 执行关闭
+							mui.back();
+						}
+					}, "json");
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">余额提现</h1>			
+			<a class="mui-icon mui-pull-right fcw" style="color:#FFF;font-size:16px;" id="chakan">查看明细</a>
+		</header>
+		<div class="mui-content">
+			<div class="weui-cells weui-cells_form">
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">当前余额</label></div>
+					<div class="weui-cell__bd fs14" id="money1"></div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">冻结金额</label></div>
+					<div class="weui-cell__bd fs14" id="money3"></div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">提现金额</label></div>
+					<div class="weui-cell__bd fs14">
+						<input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入提现金额" id="amount" name="amount">
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">登录密码</label></div>
+					<div class="weui-cell__bd fs14">
+						<input class="weui-input" type="password" placeholder="请输入登录密码" id="password" password="password" />
+					</div>
+				</div>
+			</div>
+			<div class="weui-btn-area">
+				<a class="weui-btn edo-btn_sure" href="javascript:" id="btnsub">确定</a>
+			</div>
+		</div>
+	</body>
+
+</html>

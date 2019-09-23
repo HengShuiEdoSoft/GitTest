@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>个人中心</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<style type="text/css">
+			.usertable td a {
+				padding: 5px 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="person-top-info">
+					<div class="person-top-body">
+						<a href="javascript:;" class="head-img"><img src="" width="120" height="120" id="avatar" /></a>
+						<div class="head-txt">
+							<h2 id="nickname">未设置</h2>
+							<div class="jfb" id="yue">余额：0.00</div>
+							<div class="jfb" id="dongjie">冻结：0.00</div>
+						</div>
+					</div>
+				</div>
+				<div class="weui-cells__title fcm" style="color:#F00;text-align:center" id="jymsg">
+				</div>
+				<table class="usertable">
+					<tr>
+						<td id="jiedan">
+							接单员
+						</td>
+						<td id="tuiguang">
+							推广员
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="javascript:;" id="tuiguangjiedan">推广接单员</a>
+						</td>
+						<td>
+							<a href="javascript:;" id="zijinmingxi">资金明细</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="javascript:;" id="bankband">银行绑定</a>
+						</td>
+						<td>
+							<a href="javascript:;" id="tixian">提现管理</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="javascript:;" id="editpwd">修改密码</a>
+						</td>
+						<td>
+							<a href="javascript:;" id="loginout">安全退出</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<script>
+			mui.plusReady(function() {
+				var _self = plus.webview.currentWebview();
+				_self.setStyle({
+					top: '0px',
+					bottom: '51px'
+				});
+				$(document).ready(function() {
+					initpage();
+				});
+				window.addEventListener('initpage1', function() {
+					initpage();
+				}, false);
+
+				function initpage() {
+					console.log("usercneter");
+					var w = plus.nativeUI.showWaiting();
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					mui.ajax(AliceHost + '/Users/UserCenter',{
+						data: {
+							userId: useName,
+							apptoken: apptoken
+						},
+						type: 'post',
+						dataType: 'json',
+						timeout: 3000,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							console.log(data.code);
+							if(data.code == "1") {
+								if(data.data.NickName) {
+									$("#nickname").html(data.data.NickName);
+								} else {
+									$("#nickname").html("未设置");
+								}
+								$("#yue").html("余额：" + data.data.Money1);
+								$("#dongjie").html("冻结：" + data.data.Money3);
+								if(data.data.Headimg != "") {
+									$("#avatar").attr("src", data.data.Headimg);
+								} else {
+									$("#avatar").attr("src", 'images/avatar.jpg');
+								}
+								if(data.data.SchoolID == 3) {
+									$("#jymsg").html('账户被禁用：' + data.data.Data10);
+									$("#jiedan").html('<span style="color:#626262">账户被禁用</span>');
+								} else if(data.data.SchoolID == 2) {
+									$("#jiedan").html('<span style="color:#31861d">已认证接单员</span>');
+								} else if(data.data.SchoolID == 1) {
+									$("#jiedan").html('<span style="color:#626262">待审核</span>');
+								} else if(data.data.SchoolID == 0) {
+									$("#jiedan").html('<a href="javascript:;" id="opbusiness">去认接单员</a>');
+								} else if(data.data.SchoolID == 4) {
+									$("#jiedan").html('<a href="javascript:;" id="opbusiness"><span style="color:#F60">审核不通过</span></a>');
+								}
+								if(data.data.GradeID == 3) {
+									$("#tuiguang").html('<span style="color:#626262">账户被禁用</span>');
+								} else if(data.data.GradeID == 2) {
+									$("#tuiguang").html('<span style="color:#31861d;font-size:16px">推广ID：' + data.data.ID + '</span>');
+								} else if(data.data.GradeID == 1) {
+									$("#tuiguang").html('<span style="color:#626262">待审核</span>');
+								} else if(data.data.GradeID == 0) {
+									$("#tuiguang").html('<a href="javascript:;" id="oppromoter">去认证推广员</a>');
+								} else if(data.data.GradeID == 4) {
+									$("#tuiguang").html('<a href="javascript:;" id="oppromoter"><span style="color:#F60">审核不通过</span></a>');
+								}
+							} else {
+								plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+							}
+						}
+					});
+				}
+				mui.init({
+					pullRefresh: {
+						container: '#pullrefresh',
+						down: {
+							callback: pullupRefresh
+						},
+						up: {
+							contentrefresh: '正在加载...',
+							callback: pullupRefresh
+						}
+					}
+				});
+
+				function pullupRefresh() {
+					setTimeout(function() {
+						initpage();
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					}, 1500);
+				}
+				$(document).on('tap', '#opbusiness', function() {
+					mui.openWindow({
+						url: 'Business.html',
+						id: 'Business.html'
+					});
+				});
+				$(document).on('tap', '#oppromoter', function() {
+					mui.openWindow({
+						url: 'Promoters.html',
+						id: 'Promoters.html'
+					});
+				});
+				$(document).on('tap', '#tuiguangjiedan', function() {
+					mui.openWindow({
+						url: 'UserList.html',
+						id: 'UserList.html'
+					});
+				});
+				$(document).on('tap', '#zijinmingxi', function() {
+					mui.openWindow({
+						url: 'MoneyList.html',
+						id: 'MoneyList.html'
+					});
+				});
+				$(document).on('tap', '#bankband', function() {
+					mui.openWindow({
+						url: 'BindAccount.html',
+						id: 'BindAccount.html'
+					});
+				});
+				$(document).on('tap', '#tixian', function() {
+					mui.openWindow({
+						url: 'Cash.html',
+						id: 'Cash.html'
+					});
+				});
+				$(document).on('tap', '#editpwd', function() {
+					mui.openWindow({
+						url: 'UserPwd.html',
+						id: 'UserPwd.html'
+					});
+				});
+				$(document).on('tap', '#loginout', function() {
+					plus.storage.setItem('usename', "");
+					plus.storage.setItem('mobile', "");
+					plus.storage.setItem('headimg', "");
+					plus.storage.setItem('apptoken', "");
+					plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+				});
+				$(document).on('tap', '.head-img', function() {
+					mui.openWindow({
+						url: 'UserEdit.html',
+						id: 'UserEdit.html'
+					});
+				});
+				
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,2 @@
+<import src="./media-list.vue.wxml" />
+    <template is="c113b17e" data="{{ ...$root['0'], $root }}"/>

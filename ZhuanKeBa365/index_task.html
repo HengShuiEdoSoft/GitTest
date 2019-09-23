@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>任务中心</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<style type="text/css">
+			.weui-media-box_appmsg .weui-media-box__hd {
+				margin-right: .3em;
+				width: 80px;
+				height: 80px;
+				line-height: 80px;
+				text-align: center;
+			}
+			
+			.weui-media-box__title {
+				font-size: 12px;
+				line-height: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div class="weui-panel weui-panel_access">
+				<div class="weui-panel__hd">请及时接单，超时<span id="time">0</span>分钟系统自动回收</div>
+				<div class="weui-panel__bd">
+					<div id="content">
+						<div style="text-align: center;font-size: 16px;line-height: 40px;color:#E64340">暂无任务</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				initpage();
+				$(document).on('tap', '.weui-btn', function() {
+					//mui.toast("aaa");
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					var oid = $(this).data('oid');
+					var w = plus.nativeUI.showWaiting();
+					console.log(useName);
+					console.log(apptoken);
+					console.log(oid);
+					mui.ajax(AliceHost + '/Home/TaskAcceptAjax', {
+						data: {
+							userId: useName,
+							apptoken: apptoken,
+							oid: oid
+						},
+						type: 'post',
+						dataType: 'json',
+						timeout: 3000,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							w.close();
+							w = null;
+							console.log(data.code);
+							if(data.code == "1") {
+								mui.toast(data.msg);
+								setTimeout(function() {
+									//预加载
+									page = 1;
+									initpage();
+								}, 300);
+							} else if(data.code == "0") {
+								mui.toast(data.msg);
+							} else if(data.code == "4") {
+								var abc = plus.webview.getLaunchWebview();
+								plus.webview.show(abc, '', '', function() {
+									mui.fire(abc, 'gousercenter');
+								});
+							} else {
+								plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+							}
+						},
+						error: function(e, msg) {
+							plus.nativeUI.closeWaiting();
+							if(e.status == 0) {
+								mui.toast("网络异常，请检查网络稍后再试...");
+							} else {
+								mui.toast("服务器异常，请稍后再试..." + msg);
+							}
+						}
+					});
+				});
+				$(document).on("tap", ".weui-form-preview__btn", function() {
+					initpage();
+				});
+				window.addEventListener('initpage1', function() {
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					mui.ajax(AliceHost + '/Home/AjaxIndex', {
+						data: {
+							userId: useName,
+							apptoken: apptoken
+						},
+						type: 'post',
+						dataType: 'json',
+						timeout: 3000,
+						contentType: "application/x-www-form-urlencoded; charset=utf-8",
+						success: function(data) {
+							console.log(data.code);
+							if(data.code == "1") {
+								$("#content").html(data.data);
+							} else if(data.code == "2") {
+								plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+							} else if(data.code == "4") {
+								var abc = plus.webview.getLaunchWebview();
+								plus.webview.show(abc, '', '', function() {
+									mui.fire(abc, 'gousercenter');
+								});
+							} else {
+								$("#content").html('<div style="text-align: center;font-size: 16px;line-height: 40px;color:#E64340">暂无任务</div>');
+							}
+						}
+					});
+				}, false);
+			});
+
+			function initpage() {
+				var w = plus.nativeUI.showWaiting();
+				var useName = plus.storage.getItem('usename');
+				var apptoken = plus.storage.getItem('apptoken');
+				console.log(useName);
+				console.log(apptoken);
+				mui.ajax(AliceHost + '/Home/AjaxIndex', {
+					data: {
+						userId: useName,
+						apptoken: apptoken
+					},
+					type: 'post',
+					dataType: 'json',
+					timeout: 3000,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						w.close();
+						w = null;
+						console.log(data.code);
+						if(data.code == "1") {
+							$("#content").html(data.data);
+						} else if(data.code == "2") {
+							plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+						} else if(data.code == "4") {
+							var abc = plus.webview.getLaunchWebview();
+							plus.webview.show(abc, '', '', function() {
+								mui.fire(abc, 'gousercenter');
+							});
+						} else {
+							$("#content").html('<div style="text-align: center;font-size: 16px;line-height: 40px;color:#E64340">暂无任务</div>');
+						}
+					},
+					error: function(e, msg) {
+						plus.nativeUI.closeWaiting();
+						if(e.status == 0) {
+							mui.toast("网络异常，请检查网络稍后再试...");
+						} else {
+							mui.toast("服务器异常，请稍后再试..." + msg);
+						}
+					}
+				});
+				mui.ajax(AliceHost + '/Users/UserCenter', {
+					data: {
+						userId: useName,
+						apptoken: apptoken
+					},
+					type: 'post',
+					dataType: 'json',
+					timeout: 3000,
+					contentType: "application/x-www-form-urlencoded; charset=utf-8",
+					success: function(data) {
+						if(data.code == "1") {
+							$("#time").html(data.data.TaskTime);
+						}
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

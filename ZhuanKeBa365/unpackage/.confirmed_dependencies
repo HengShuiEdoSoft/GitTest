@@ -1,0 +1,129 @@
+{
+  "index.html": {
+    "resources": [
+      "index_task.html",
+      "index_task1.html",
+      "css/main.css",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "index_task.html",
+      "login.html",
+      "index_task2.html",
+      "index_task1.html",
+      "usercenter.html"
+    ]
+  },
+  "login.html": {
+    "refer": [
+      "index.html",
+      "usercenter.html",
+      "register.html",
+      "ForgetPwd.html"
+    ],
+    "resources": [
+      "images/password@2x.png",
+      "css/login.css",
+      "css/mui.min.css",
+      "images/logo2.png",
+      "images/user.login@2x.png",
+      "images/login01.jpg"
+    ]
+  },
+  "index_task.html": {
+    "refer": [
+      "login.html",
+      "taskshow.html",
+      "usercenter.html"
+    ],
+    "resources": [
+      "css/base.css",
+      "css/main.css",
+      "css/mui.min.css",
+      "css/weui.min.css",
+      "css/weui.plus.css"
+    ]
+  },
+  "index_task2.html": {
+    "refer": [
+      "index_task1.html",
+      "taskshow.html",
+      "index_task3.html"
+    ]
+  },
+  "index_task1.html": {
+    "refer": [
+      "index_task2.html",
+      "taskshow.html",
+      "usercenter.html",
+      "taskall.html",
+      "index_task3.html"
+    ],
+    "resources": [
+      "css/base.css",
+      "css/main.css",
+      "css/mui.min.css",
+      "css/weui.min.css",
+      "css/weui.plus.css"
+    ]
+  },
+  "taskshow.html": {
+    "resources": [
+      "/js/localimg.js",
+      "/js/fix.js"
+    ],
+    "refer": [
+      "index_task1.html",
+      "index_task.html"
+    ]
+  },
+  "index_task3.html": {
+    "refer": [
+      "index_task2.html",
+      "taskshow.html",
+      "index_task1.html"
+    ]
+  },
+  "usercenter.html": {
+    "refer": [
+      "Business.html",
+      "UserList.html",
+      "MoneyList.html",
+      "BindAccount.html",
+      "Cash.html",
+      "UserPwd.html",
+      "login.html",
+      "UserEdit.html",
+      "Promoters.html"
+    ],
+    "resources": [
+      "UserList.html",
+      "css/base.css",
+      "css/main.css",
+      "css/mui.min.css",
+      "css/weui.min.css",
+      "images/avatar.jpg",
+      "css/weui.plus.css"
+    ]
+  },
+  "Cash.html": {
+    "refer": [
+      "CashList.html"
+    ]
+  },
+  "UserList.html": {
+    "refer": [
+      "login.html"
+    ]
+  },
+  "BindAccount.html": {
+    "refer": [
+      "login.html"
+    ]
+  },
+  "MoneyList.html": {
+    "refer": [
+      "login.html"
+    ]
+  }
+}

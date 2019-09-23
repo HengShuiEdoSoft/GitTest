@@ -1,0 +1,116 @@
+.header {
+	background: #00abef;
+	color: #ffffff;
+	font-size: 1.385rem;
+	padding: 0.3125rem 0px;
+}
+#header {
+    padding: 0.5rem;
+}
+.header img {
+    width: 1.385rem;
+    margin-left: 0.625rem;
+    margin-top: 0.25rem;
+}
+.login_info {
+	margin-top: 2rem;
+}
+.form-horizontal .form-group {
+	padding: 0rem 0.85rem;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0;
+    background: #ffffff;
+}
+.form-group {
+    position: relative;
+    margin-bottom: 1.2rem;
+}
+.form-horizontal .form-group .icon {
+	padding-top: 10px;
+    width: 2rem;
+    position: absolute;
+    overflow: hidden;
+}
+.form-horizontal .form-group label {
+    padding-top: 1rem;
+    /**2rem**/
+    width: 3rem;
+    position: absolute;
+    overflow: hidden;
+}
+.form-horizontal .form-group .icon img {
+	width: 2rem;
+}
+.form-item {
+    display: block;
+    height: 2rem;
+    padding: 0.625rem 1.2rem;
+    font-size: 1.4rem;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    -webkit-appearance: none;
+    border-radius: 0;
+    font-size: 1rem;
+}
+input {
+    line-height: normal;
+    border: 0;
+    background: 0 0;
+}
+
+.form-horizontal .form-group .form-item {
+    /**2.5rem**/
+    padding-left: 3rem;
+    border: none;
+}
+.Forget , .Verify {
+	position: absolute;
+	right: 0.85rem;
+	top: 1rem;
+	color: #00abef;
+}
+.login_button {
+	margin-top: 1.5rem;
+	background: #ffffff;
+	height: 3.125rem;
+}
+.login {
+	display: block;
+	height: 3.125rem;
+	line-height: 3.125rem;
+	font-size: 1rem;
+	color: #00abef;
+}
+.register , .agree {
+	margin-top: 1.5rem;
+}
+.register a {
+	display: block;
+	padding-left: 1.5rem;
+	color: #00abef;
+}
+/*注册*/
+.introduce {
+    padding: 1rem 0.625rem 0rem 0.625rem;
+    color: #787878;
+}
+.introduce span {
+    color: #fe1b28;
+}
+#login_info {
+    margin-top: 1rem;
+}
+.form-horizontal .Verify_item {
+    margin-bottom: 1.5rem;
+}
+.agree p {
+    padding-left: 1.5rem;
+}
+.agree a {
+    color: #00abef;
+}
+.Verify_tmp{
+    color:#ddd;
+}

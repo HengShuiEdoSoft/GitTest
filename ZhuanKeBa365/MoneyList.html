@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>资金明细</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/zepto.min.js"></script>
+		<script type="text/javascript" src="js/listuser.js"></script>
+		<script>
+			mui.plusReady(function() {
+				$(document).ready(function() {
+					page = 1;
+					getList3();
+					scrollPage(getList3);
+					$("#reset").click(function() {
+						$("#OrderID").val('');
+						$("#Money1").val('');
+						$("#Money2").val('');
+						$("#txtSDate").val('');
+						$("#txtEDate").val('');
+					});
+					$("#btnsubmit").click(function() {
+						$('.conpanel').removeClass('grade-w-roll');
+						$(".mask").hide();
+						$("#conbd").html("");
+						getList3();
+					});
+					$(".condkey").click(function() {
+						if($('.conpanel').hasClass('grade-w-roll')) {
+							$('.conpanel').removeClass('grade-w-roll');
+							$(".mask").hide();
+						} else {
+							$('.conpanel').addClass('grade-w-roll');
+							$(".mask").show();
+						}
+					});
+					$(".mask").click(function() {
+						$('.conpanel').removeClass('grade-w-roll');
+						$(".mask").hide();
+					});
+				});
+				window.addEventListener('initpage1', function() {
+					page = 1;
+					$("#OrderID").val('');
+					$("#Money1").val('');
+					$("#Money2").val('');
+					$("#txtSDate").val('');
+					$("#txtEDate").val('');
+					$("#conbd").html("");
+					getList3();
+				}, false);
+			});
+		</script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">资金明细</h1>
+		</header>
+		<div class="mui-content">
+			<div class="conheader">
+				<div class="sheader">
+					<div class="condition">
+						<ul>
+							<li class="condkey">筛选</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="conpanel">
+				<div class="weui-cells weui-cells_form conpanelbd">
+					<div class="weui-cell">
+						<div class="weui-cell__hd"><label class="weui-label">订单ID</label></div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" type="number" name="OrderID" id="OrderID" pattern="[0-9]*" placeholder="请输入订单ID" value="" />
+						</div>
+					</div>
+
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">金额</label>
+						</div>
+						<div class="weui-cell__bd">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__bd" style="margin-left:35px">
+							<input class="weui-input" name="Money1" id="Money1" type="text" value="" style="border:1px solid #CCC;width:110px;height:30px;font-size:12px" />
+						</div>
+						<div class="weui-cell__bd" style="border-bottom:1px solid #CCC;margin:0 10px;">
+
+						</div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" name="Money2" id="Money2" type="text" value="" style="border:1px solid #CCC;width:110px;height:30px;font-size:12px" />
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">日期</label>
+						</div>
+						<div class="weui-cell__bd">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__bd" style="margin-left:35px">
+							<input class="weui-input" name="txtSDate" id="txtSDate" type="date" value="" style="border:1px solid #CCC;width:110px;height:30px;font-size:12px" />
+						</div>
+						<div class="weui-cell__bd" style="border-bottom:1px solid #CCC;margin:0 10px;">
+						</div>
+						<div class="weui-cell__bd">
+							<input class="weui-input" name="txtEDate" id="txtEDate" type="date" value="" style="border:1px solid #CCC;width:110px;height:30px;font-size:12px" />
+						</div>
+					</div>
+					<div class="weui-form-preview">
+						<div class="weui-form-preview__ft">
+							<input type="button" id="reset" class="weui-form-preview__btn weui-form-preview__btn_default alibtnreset" value="重置" />
+							<input type="submit" id="btnsubmit" class="weui-form-preview__btn weui-form-preview__btn_primary alibtnsure" value="确定" />
+						</div>
+					</div>
+				</div>
+				<div class="mask"></div>
+			</div>
+			<div class="weui-panel weui-panel_access">
+				<div class="weui-panel__bd" id="conbd">
+
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

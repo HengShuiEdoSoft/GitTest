@@ -1,0 +1,144 @@
+<import src="/components/uni-swipe-action/uni-swipe-action.vue.wxml" />
+<import src="/components/uni-list/uni-list.vue.wxml" />
+<import src="/components/uni-list-item/uni-list-item.vue.wxml" />
+<import src="/components/uni-collapse/uni-collapse.vue.wxml" />
+<import src="/components/uni-collapse-item/uni-collapse-item.vue.wxml" />
+<import src="/components/uni-card/uni-card.vue.wxml" />
+<import src="/components/uni-nav-bar/uni-nav-bar.vue.wxml" />
+<import src="/components/uni-icon/uni-icon.vue.wxml" />
+<import src="/components/uni-popup/uni-popup.vue.wxml" />
+<import src="/components/uni-drawer/uni-drawer.vue.wxml" />
+<import src="/components/uni-nav-bar.vue.wxml" />
+<import src="/components/uni-icon.vue.wxml" />
+<import src="/components/page-head.vue.wxml" />
+<import src="/components/qrcode/qrcode.vue.wxml" />
+<import src="/components/page-foot.vue.wxml" />
+<import src="/components/mpvue-echarts/src/echarts.vue.wxml" />
+<import src="/components/ly-markdown/ly-markdown.vue.wxml" />
+<import src="/components/uParse/src/wxParse.vue.wxml" />
+<import src="/components/uni-calendar/uni-calendar.vue.wxml" />
+<import src="/components/uni-steps/uni-steps.vue.wxml" />
+<import src="/components/uni-notice-bar/uni-notice-bar.vue.wxml" />
+<import src="/components/uni-rate/uni-rate.vue.wxml" />
+<import src="/components/uni-pagination/uni-pagination.vue.wxml" />
+<import src="/components/uni-grid/uni-grid.vue.wxml" />
+<import src="/components/uni-segmented-control/uni-segmented-control.vue.wxml" />
+<import src="/components/uni-tag/uni-tag.vue.wxml" />
+<import src="/components/uni-number-box/uni-number-box.vue.wxml" />
+<import src="/components/uni-load-more/uni-load-more.vue.wxml" />
+<import src="/components/uni-countdown/uni-countdown.vue.wxml" />
+<import src="/components/uni-badge/uni-badge.vue.wxml" />
+<import src="/common/slots.wxml" />
+<import src="/components/uni-status-bar/uni-status-bar.vue.wxml" />
+<import src="/components/uni-calendar/uni-calendar-item.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate0.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate1.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseVideo.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseAudio.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseImg.vue.wxml" />
+<import src="/components/uni-fab.vue.wxml" />
+<import src="/components/im-chat/messageshow.vue.wxml" />
+<import src="/components/im-chat/chatinput.vue.wxml" />
+<import src="/components/tab-nvue/mediaList.vue.wxml" />
+<import src="/components/mpvue-picker/mpvuePicker.vue.wxml" />
+<import src="/components/mpvue-citypicker/mpvueCityPicker.vue.wxml" />
+<import src="/components/mpvueGestureLock/index.vue.wxml" />
+<import src="/components/api-set-tababr.vue.wxml" />
+<import src="/components/uni-status-bar.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate2.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate3.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate4.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate5.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate6.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate7.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate8.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate9.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate10.vue.wxml" />
+<import src="/components/uParse/src/components/wxParseTemplate11.vue.wxml" />
+
+<template name="5735f40e-default-5735f40e-0"><view class="_view 5735f40e cont">SwipeAction 基础使用场景</view></template>
+
+<template name="5735f40e-default-5735f40e-1"><view class="_view 5735f40e cont">SwipeAction 禁止滑动展示</view></template>
+
+<template name="5735f40e-default-5735f40e-2"><view class="_view 5735f40e cont">点击选项时触发事件</view></template>
+
+<template name="5735f40e-default-5735f40e-3"><view class="_view 5735f40e cont">开启或关闭事件时触发事件</view></template>
+
+<template name="5735f40e-default-5735f40e-4"><view class="_view 5735f40e cont">开启或关闭事件时触发事件</view></template>
+
+<template name="5735f40e-default-5735f40e-6"><template title="item1" show-arrow="false" data="{{...$root['0'], ...$root[$kk+'5735f40e-5'],$root}}" is="9deb4444"></template></template>
+
+<template name="5735f40e-default-5735f40e-8"><template title="item2" show-arrow="false" data="{{...$root['0'], ...$root[$kk+'5735f40e-7'],$root}}" is="9deb4444"></template></template>
+
+<template name="5735f40e-default-5735f40e-10"><template title="item3" show-arrow="false" data="{{...$root['0'], ...$root[$kk+'5735f40e-9'],$root}}" is="9deb4444"></template></template>
+
+<template name="5735f40e-default-5735f40e-11"><template data="{{...$root['0'], ...$root[$kk+'5735f40e-6'],$root, $slotdefault:'5735f40e-default-5735f40e-6'}}" is="3aff52dc"></template><template data="{{...$root['0'], ...$root[$kk+'5735f40e-8'],$root, $slotdefault:'5735f40e-default-5735f40e-8'}}" is="3aff52dc"></template><template data="{{...$root['0'], ...$root[$kk+'5735f40e-10'],$root, $slotdefault:'5735f40e-default-5735f40e-10'}}" is="3aff52dc"></template></template>
+
+<template name="58934ae4-default-58934ae4-3"><template title="标题文字" thumb="http://img-cdn-qiniu.dcloud.net.cn/new-page/hx.png" data="{{...$root['0'], ...$root[$kk+'58934ae4-0'],$root}}" is="9deb4444"></template><template title="标题文字" note="描述信息" thumb="http://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png" data="{{...$root['0'], ...$root[$kk+'58934ae4-1'],$root}}" is="9deb4444"></template><template title="标题文字" note="描述信息" show-extra-icon="true" data="{{...$root['0'], ...$root[$kk+'58934ae4-2'],$root}}" is="9deb4444"></template></template>
+
+<template name="58934ae4-default-58934ae4-4"><template data="{{...$root['0'], ...$root[$kk+'58934ae4-3'],$root, $slotdefault:'58934ae4-default-58934ae4-3'}}" is="6b9ee932"></template></template>
+
+<template name="58934ae4-default-58934ae4-5"><view style="padding: 30rpx;" class="_view 58934ae4">折叠内容主体，可自定义内容及样式</view></template>
+
+<template name="58934ae4-default-58934ae4-6"><view style="padding: 30rpx;" class="_view 58934ae4">禁用状态</view></template>
+
+<template name="58934ae4-default-58934ae4-7"><template title="标题文字" data="{{...$root['0'], ...$root[$kk+'58934ae4-4'],$root, $slotdefault:'58934ae4-default-58934ae4-4'}}" is="4da43740"></template><template title="默认开启" open="true" data="{{...$root['0'], ...$root[$kk+'58934ae4-5'],$root, $slotdefault:'58934ae4-default-58934ae4-5'}}" is="4da43740"></template><template title="禁用状态" disabled="true" data="{{...$root['0'], ...$root[$kk+'58934ae4-6'],$root, $slotdefault:'58934ae4-default-58934ae4-6'}}" is="4da43740"></template></template>
+
+<template name="58934ae4-default-58934ae4-8"><view style="padding: 30rpx;" class="_view 58934ae4">手风琴效果</view></template>
+
+<template name="58934ae4-default-58934ae4-9"><view style="padding: 30rpx;" class="_view 58934ae4">手风琴效果</view></template>
+
+<template name="58934ae4-default-58934ae4-10"><view style="padding: 30rpx;" class="_view 58934ae4">手风琴效果</view></template>
+
+<template name="58934ae4-default-58934ae4-11"><template title="标题文字" data="{{...$root['0'], ...$root[$kk+'58934ae4-8'],$root, $slotdefault:'58934ae4-default-58934ae4-8'}}" is="4da43740"></template><template title="标题文字" data="{{...$root['0'], ...$root[$kk+'58934ae4-9'],$root, $slotdefault:'58934ae4-default-58934ae4-9'}}" is="4da43740"></template><template title="标题文字" data="{{...$root['0'], ...$root[$kk+'58934ae4-10'],$root, $slotdefault:'58934ae4-default-58934ae4-10'}}" is="4da43740"></template></template>
+
+<template name="58934ae4-default-58934ae4-12"><view style="padding: 30rpx;" class="_view 58934ae4">折叠内容主体，可自定义内容及样式</view></template>
+
+<template name="58934ae4-default-58934ae4-13"><view style="padding: 30rpx;" class="_view 58934ae4">折叠内容主体，可自定义内容及样式</view></template>
+
+<template name="58934ae4-default-58934ae4-14"><template title="容器进行动画" animation="outer" data="{{...$root['0'], ...$root[$kk+'58934ae4-12'],$root, $slotdefault:'58934ae4-default-58934ae4-12'}}" is="4da43740"></template><template title="内容进行动画" animation="inner" data="{{...$root['0'], ...$root[$kk+'58934ae4-13'],$root, $slotdefault:'58934ae4-default-58934ae4-13'}}" is="4da43740"></template></template>
+
+<template name="58934ae4-default-58934ae4-15"><view style="padding: 30rpx;" class="_view 58934ae4">折叠内容主体，可自定义内容及样式</view></template>
+
+<template name="58934ae4-default-58934ae4-16"><view style="padding: 30rpx;" class="_view 58934ae4">折叠内容主体，可自定义内容及样式</view></template>
+
+<template name="58934ae4-default-58934ae4-17"><template title="标题文字" thumb="http://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png" data="{{...$root['0'], ...$root[$kk+'58934ae4-15'],$root, $slotdefault:'58934ae4-default-58934ae4-15'}}" is="4da43740"></template><template title="标题文字" thumb="http://img-cdn-qiniu.dcloud.net.cn/new-page/hx.png" data="{{...$root['0'], ...$root[$kk+'58934ae4-16'],$root, $slotdefault:'58934ae4-default-58934ae4-16'}}" is="4da43740"></template></template>
+
+<template name="d107df24-default-d107df24-0">这是一个基础卡片示例，内容样式可自定义，卡片视图常用来显示完整独立的一段信息，比如一篇文章的预览图、作者信息、时间等。</template>
+
+<template name="d107df24-default-d107df24-1">内容主体，可自定义内容及样式</template>
+
+<template name="d107df24-default-d107df24-2">内容主体，可自定义内容及样式，内容主体，可自定义内容及样式，内容主体，可自定义内容及样式</template>
+
+<template name="5d25592e-default-5d25592e-4"><template title="标题文字" show-arrow="false" data="{{...$root['0'], ...$root[$kk+'5d25592e-0'],$root}}" is="9deb4444"></template><template title="标题文字" data="{{...$root['0'], ...$root[$kk+'5d25592e-1'],$root}}" is="9deb4444"></template><template title="标题文字" show-badge="true" badge-text="12" data="{{...$root['0'], ...$root[$kk+'5d25592e-2'],$root}}" is="9deb4444"></template><template title="禁用状态" disabled="true" show-badge="true" badge-text="12" data="{{...$root['0'], ...$root[$kk+'5d25592e-3'],$root}}" is="9deb4444"></template></template>
+
+<template name="5d25592e-default-5d25592e-8"><template title="标题文字" note="描述信息" show-arrow="false" data="{{...$root['0'], ...$root[$kk+'5d25592e-5'],$root}}" is="9deb4444"></template><template title="标题文字" note="描述信息" data="{{...$root['0'], ...$root[$kk+'5d25592e-6'],$root}}" is="9deb4444"></template><template title="标题文字" note="描述信息" show-badge="true" badge-text="12" data="{{...$root['0'], ...$root[$kk+'5d25592e-7'],$root}}" is="9deb4444"></template></template>
+
+<template name="5d25592e-default-5d25592e-11"><template title="标题文字" thumb="http://img-cdn-qiniu.dcloud.net.cn/new-page/hx.png" data="{{...$root['0'], ...$root[$kk+'5d25592e-9'],$root}}" is="9deb4444"></template><template title="标题文字" note="描述信息" thumb="http://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png" data="{{...$root['0'], ...$root[$kk+'5d25592e-10'],$root}}" is="9deb4444"></template></template>
+
+<template name="5d25592e-default-5d25592e-14"><template title="标题文字" show-extra-icon="true" data="{{...$root['0'], ...$root[$kk+'5d25592e-12'],$root}}" is="9deb4444"></template><template title="标题文字" note="描述信息" show-extra-icon="true" data="{{...$root['0'], ...$root[$kk+'5d25592e-13'],$root}}" is="9deb4444"></template></template>
+
+<template name="5d25592e-default-5d25592e-18"><template title="标题文字" show-switch="true" show-arrow="false" bindswitchChange="handleProxy" data-eventid="{{'5d25592e-0'}}" data-comkey="{{$k}}" data="{{...$root['0'], ...$root[$kk+'5d25592e-15'],$root}}" is="9deb4444"></template><template title="标题文字" show-switch="true" switch-checked="true" show-arrow="false" bindswitchChange="handleProxy" data-eventid="{{'5d25592e-1'}}" data-comkey="{{$k}}" data="{{...$root['0'], ...$root[$kk+'5d25592e-16'],$root}}" is="9deb4444"></template><template title="禁用状态" disabled="true" show-switch="true" switch-checked="true" show-arrow="false" bindswitchChange="handleProxy" data-eventid="{{'5d25592e-2'}}" data-comkey="{{$k}}" data="{{...$root['0'], ...$root[$kk+'5d25592e-17'],$root}}" is="9deb4444"></template></template>
+
+<template name="3f1f2f42-default-3f1f2f42-4"><view class="_view 3f1f2f42 input-view"><template type="search" size="22" color="#666666" data="{{...$root['0'], ...$root[$kk+'3f1f2f42-3'],$root}}" is="649f0f92"></template><input confirm-type="search" bindconfirm="handleProxy" class="_input 3f1f2f42 input" type="text" placeholder="输入搜索关键词" data-eventid="{{'3f1f2f42-2'}}" data-comkey="{{$k}}" /></view></template>
+
+<template name="3f1f2f42-left-3f1f2f42-4"><view class="_view 3f1f2f42 city"><view class="_view 3f1f2f42">{{city}}</view><template type="arrowdown" color="#333333" size="22" data="{{...$root['0'], ...$root[$kk+'3f1f2f42-2'],$root}}" is="649f0f92"></template></view></template>
+
+<template name="68515788-default-68515788-3"><view class="_view 68515788 uni-center center-box"><image class="_image 68515788 image" src="/static/uni.png"></image></view></template>
+
+<template name="68515788-default-68515788-4"><scroll-view class="_scroll-view 68515788 uni-center center-box" scroll-y="true"><view class="_view 68515788 uni-list-item" wx:key="index" key="{{index}}" wx:for="{{list}}" wx:for-index="index" wx:for-item="item">滚动列表数据 {{ item }}</view></scroll-view></template>
+
+<template name="68515788-default-68515788-5"><view class="_view 68515788 bottom-title">分享到</view><view class="_view 68515788 bottom-content"><view class="_view 68515788 bottom-content-box" wx:key="index" key="{{index}}" wx:for="{{bottomData}}" wx:for-index="index" wx:for-item="item"><view class="_view 68515788 bottom-content-image {{item.name}}"><text class="_text 68515788 icon">{{ item.icon }}</text></view><view class="_view 68515788 bottom-content-text">{{ item.text }}</view></view></view><view class="_view 68515788 bottom-btn" bindtap="handleProxy" data-eventid="{{'68515788-11'}}" data-comkey="{{$k}}">取消分享</view></template>
+
+<template name="014d7e0e-default-014d7e0e-4"><template title="Item1" data="{{...$root['0'], ...$root[$kk+'014d7e0e-1'],$root}}" is="9deb4444"></template><template title="Item2" data="{{...$root['0'], ...$root[$kk+'014d7e0e-2'],$root}}" is="9deb4444"></template><template title="Item3" show-badge="true" badge-text="12" data="{{...$root['0'], ...$root[$kk+'014d7e0e-3'],$root}}" is="9deb4444"></template></template>
+
+<template name="014d7e0e-default-014d7e0e-5"><template data="{{...$root['0'], ...$root[$kk+'014d7e0e-4'],$root, $slotdefault:'014d7e0e-default-014d7e0e-4'}}" is="6b9ee932"></template><view class="_view 014d7e0e close"><button type="default" bindtap="handleProxy" data-eventid="{{'014d7e0e-2'}}" data-comkey="{{$k}}" class="_button 014d7e0e">关闭Drawer</button></view></template>
+
+<template name="014d7e0e-default-014d7e0e-9"><template title="Item1" data="{{...$root['0'], ...$root[$kk+'014d7e0e-6'],$root}}" is="9deb4444"></template><template title="Item2" data="{{...$root['0'], ...$root[$kk+'014d7e0e-7'],$root}}" is="9deb4444"></template><template title="Item3" show-badge="true" badge-text="12" data="{{...$root['0'], ...$root[$kk+'014d7e0e-8'],$root}}" is="9deb4444"></template></template>
+
+<template name="014d7e0e-default-014d7e0e-10"><template data="{{...$root['0'], ...$root[$kk+'014d7e0e-9'],$root, $slotdefault:'014d7e0e-default-014d7e0e-9'}}" is="6b9ee932"></template><view class="_view 014d7e0e close"><button type="default" bindtap="handleProxy" data-eventid="{{'014d7e0e-5'}}" data-comkey="{{$k}}" class="_button 014d7e0e">关闭Drawer</button></view></template>
+
+<template name="7d5be316-default-7d5be316-3"><view class="_view 7d5be316 input-view"><template type="search" size="22" color="#666666" data="{{...$root['0'], ...$root[$kk+'7d5be316-2'],$root}}" is="48d56b9a"></template><input confirm-type="search" bindconfirm="handleProxy" class="_input 7d5be316 input" type="text" placeholder="输入搜索关键词" data-eventid="{{'7d5be316-1'}}" data-comkey="{{$k}}" /></view></template>
+
+<template name="7d5be316-left-7d5be316-3"><view class="_view 7d5be316 city"><text class="_text 7d5be316">{{city}}</text><template type="arrowdown" color="#333333" size="22" data="{{...$root['0'], ...$root[$kk+'7d5be316-1'],$root}}" is="48d56b9a"></template></view></template>
+

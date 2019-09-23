@@ -1,0 +1,1 @@
+<template name="55eea052"><view class="_view 55eea052 qrcode"><image class="_image 55eea052 image" wx:if="{{img != ''}}" src="{{img}}" style=" {{('width:' + (size + 'px') + ';' + 'height:' + (size + 'px') + ';')}}"></image></view></template>

@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="misapplication-tap-highlight" content="no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>银行绑定</title>
+		<script src="js/mui.min.js"></script>
+		<script src="js/common.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/weui.min.css" rel="stylesheet" />
+		<link href="css/weui.plus.css" rel="stylesheet" />
+		<link href="css/base.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+		<style type="text/css">
+
+		</style>
+		<script>
+			mui.plusReady(function() {
+				$(document).ready(function() {
+					initpage();
+				});
+
+				function initpage() {
+					console.log("bindaccount");
+					var w = plus.nativeUI.showWaiting();
+					var useName = plus.storage.getItem('usename');
+					var apptoken = plus.storage.getItem('apptoken');
+					mui.ajax(AliceHost + '/Users/UserCenter',{
+						data: {
+							userId: useName,
+							apptoken: apptoken
+						},
+						type: 'post',
+						dataType: 'json',
+						timeout: 3000,
+						success: function(data) {
+							plus.nativeUI.closeWaiting();							
+							console.log(useName);					
+							console.log(apptoken);
+							console.log(data.code);
+							if(data.code == "1") {
+								$("#bankname").val(data.data.UserName);
+								console.log(data.data.Data4);
+								if(data.data.Data4 != "") {
+									$("#userbank").attr("disabled", "disabled");
+									$("#userbank").val(data.data.Data4);
+								}
+								if(data.data.Data5 != "") {
+									$("#bankno").attr("disabled", "disabled");
+									$("#bankno").val(data.data.Data5);
+									$("#btnsure").text("我要从新绑定");
+								}
+								if(data.data.Data6 != "") {
+									$("#bankname").attr("disabled", "disabled");
+
+								}
+								if(data.data.Data7 != "") {
+									$("#wechat").attr("disabled", "disabled");
+									$("#wechat").val(data.data.Data7);
+								}
+							} else {
+								plus.webview.open('login.html', 'login.html', '', '', '', function() {});
+							}
+						}
+					});
+				}
+				$('#btnsure').on('tap', function() {
+					if($("#btnsure").text() == "确定") {
+						var userId = plus.storage.getItem('usename');
+						var apptoken = plus.storage.getItem('apptoken');
+						plus.nativeUI.showWaiting('提交中...');
+						var userbank = $("#userbank").val();
+						var bankno = $("#bankno").val();
+						var bankname = $("#bankname").val();
+						var wechat = $("#wechat").val();
+						if(userbank == "") {
+							 mui.toast("请选择所属银行");
+							 plus.nativeUI.closeWaiting();
+							return;
+						}
+						if(bankno == "") {
+							 mui.toast("请输入银行卡号");
+							 plus.nativeUI.closeWaiting();
+							return;
+						}
+						if(bankname == "") {
+							 mui.toast("请输入真实姓名");
+							 plus.nativeUI.closeWaiting();
+							return;
+						}
+						if(wechat == "") {
+							 mui.toast("请输入微信号");
+							 plus.nativeUI.closeWaiting();
+							return;
+						}
+						mui.post(AliceHost + "/Users/BindAccount", {
+							userId: userId,
+							apptoken: apptoken,
+							userbank: userbank,
+							bankno: bankno,
+							bankname: bankname,
+							wechat: wechat
+						}, function(data) {
+							plus.nativeUI.closeWaiting();
+							if(data.code == "0") {
+								mui.toast(data.msg);
+							} else {
+								mui.toast(data.msg);
+								// 获取目标口窗口对象
+								var target = plus.webview.getWebviewById('usercenter.html');
+								// 执行相应的事件
+								mui.fire(target, 'initpage1', {});
+								// 执行关闭
+								mui.back();
+							}
+						}, "json");
+					} else {
+						$("#userbank").removeAttr("disabled");
+						$("#bankno").removeAttr("disabled");
+						$("#wechat").removeAttr("disabled");
+						$("#btnsure").text("确定");
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav bg-bgm">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left fcw"></a>
+			<h1 id="title" class="mui-title fcw">银行绑定</h1>
+		</header>
+		<div class="mui-content">
+			<div class="weui-cells weui-cells_form">
+				<div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="weui-cell__hd">
+						<label class="weui-label inputtxt">所属银行</label>
+					</div>
+					<div class="weui-cell__bd">
+						<select class="weui-select" name="userbank" id="userbank" style="font-size:14px;line-height: 40px;">
+							<option value="">请选择</option>
+							<option value="中国建设银行">中国建设银行</option>
+							<option value="中国农业银行">中国农业银行</option>
+							<option value="中国工商银行">中国工商银行</option>
+							<option value="中国银行">中国银行</option>
+							<option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+							<option value="民生银行">民生银行</option>
+							<option value="招商银行">招商银行</option>
+							<option value="交通银行">交通银行</option>
+							<option value="兴业银行">兴业银行</option>
+							<option value="光大银行">光大银行</option>
+							<option value="广发银行">广发银行</option>
+							<option value="上海浦东发展银行">上海浦东发展银行</option>
+						</select>
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">银行卡号</label></div>
+					<div class="weui-cell__bd fs14">
+						<input class="weui-input" type="text" placeholder="请输入银行卡号" id="bankno" name="bankno" value="" />
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">真实姓名</label></div>
+					<div class="weui-cell__bd fs14">
+						<input class="weui-input" type="text" placeholder="请输入真实姓名" id="bankname" name="bankname" value="" readonly="readonly" />
+					</div>
+				</div>
+				<div class="weui-cell">
+					<div class="weui-cell__hd"><label class="weui-label inputtxt">微信号</label></div>
+					<div class="weui-cell__bd fs14">
+						<input class="weui-input" type="text" placeholder="请输入微信号" id="wechat" name="wechat" value="" />
+					</div>
+				</div>
+			</div>
+			<div class="weui-btn-area">
+				<a class="weui-btn edo-btn_sure" href="javascript:" id="btnsure">确定</a>
+			</div>
+		</div>
+	</body>
+
+</html>

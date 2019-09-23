@@ -1,0 +1,2 @@
+<import src="./timeline.vue.wxml" />
+    <template is="c2ecc0fe" data="{{ ...$root['0'], $root }}"/>
